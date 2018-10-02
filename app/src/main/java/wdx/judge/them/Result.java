@@ -13,10 +13,6 @@ import android.widget.TextView;
 
 
 public class Result extends MainActivity {
-
-    private LinearLayout llMain;
-    private TextView bio;
-    private ImageView avatar,box;
     String yourAnswer;
     int wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT;
 
@@ -27,14 +23,14 @@ public class Result extends MainActivity {
               for(int i=1;i<5;i++) answerData[i][2]=1;
               for(int i=5;i<8;i++) answerData[i][2]=0;
 
-            llMain = (LinearLayout) findViewById(R.id.llMain);
+            LinearLayout llMain = findViewById(R.id.llMain);
             LayoutInflater inflater = getLayoutInflater();
 
            for(int i=1;i<8;i++) {
                View view = inflater.inflate(R.layout.result_item, null, false);
-               bio = (TextView) view.findViewById(R.id.bio);
-               avatar = (ImageView) view.findViewById(R.id.avatar);
-               box = (ImageView) view.findViewById(R.id.box);
+               TextView bio = view.findViewById(R.id.bio);
+               ImageView avatar = view.findViewById(R.id.avatar);
+               ImageView box = view.findViewById(R.id.box);
                if ((answerData[i][1]==answerData[answerData[i][0]][2])&&(answerData[answerData[i][0]][2]==1)){ yourAnswer= "Как удачно что ты его отправил на нары"; box.setImageResource(R.drawable.right_card_background);}
                if ((answerData[i][1]==answerData[answerData[i][0]][2])&&(answerData[answerData[i][0]][2]==0)){ yourAnswer= "Ему очень повезло что ты его оправдал"; box.setImageResource(R.drawable.right_card_background);}
                if (!(answerData[i][1]==answerData[answerData[i][0]][2])&&(answerData[answerData[i][0]][2]==1)){ yourAnswer= "Это была ужасная ошибка, теперь убийца на воле"; box.setImageResource(R.drawable.wrong_card_background);}

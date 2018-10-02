@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -29,7 +31,7 @@ import wdx.judge.them.OnSwipeListener;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    final int dataSetNum=7;
     private List<Integer> list = new ArrayList<>();
     final static int answerData[][] = new int[10][5]; //номер картинки+bio, свайп влево(тюрьма), правильный ответ, распространенность ответа
     private int counter=1;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
      private void initView() {
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(new MyAdapter());
         CardItemTouchHelperCallback cardCallback = new CardItemTouchHelperCallback(recyclerView.getAdapter(), list);
@@ -112,11 +114,20 @@ public class MainActivity extends AppCompatActivity {
                     answerData[counter++][0] = i;
                 }
             }
+        setProgressBar(counter-1);
+    }
+
+
+    private void setProgressBar(int v) {
+
+        ProgressBar progress =  findViewById(R.id.progress);
+        int b = (100 / dataSetNum) * v;
+        progress.setProgress(b);
     }
 
 
     public static int getResId(String variableName, Class<?> с) {
-        Field field = null;
+        Field field;
         int resId = 0;
         try {
             field = с.getField(variableName);
@@ -143,14 +154,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class MyAdapter extends RecyclerView.Adapter {
+        @NonNull
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
             return new MyViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ImageView avatarImageView = ((MyViewHolder) holder).avatarImageView;
             avatarImageView.setImageResource(list.get(position));
             setCurrentAvatar(position);
@@ -176,5 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
 
 }
