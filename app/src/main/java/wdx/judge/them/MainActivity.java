@@ -36,17 +36,18 @@ import static android.view.View.GONE;
 public class MainActivity extends AppCompatActivity {
     static int dataSetNum;
     private List<Integer> list = new ArrayList<>();
-    final static int answerData[][] = new int[8][5]; //номер картинки+bio, свайп влево(тюрьма), правильный ответ, распространенность ответа
+    final static int answerData[][] = new int[20][5]; //номер картинки+bio, свайп влево(тюрьма), правильный ответ, распространенность ответа
     private int counter;
     private int currentAvatar;
     private boolean leftSwiped;
-    ScrollView categoryViev;
+    ScrollView categoryView;
     static int chosenCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
     }
 
      private void initView() {
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void gameDataSwiped() {
-            for (int i=0; i < 8; i++){
+            for (int i=0; i < 20; i++){
                 if (currentAvatar==getResId("img"+i,R.drawable.class)) {
                     answerData[counter][1] = leftSwiped ? 1 : 0;
                     answerData[counter++][0] = i;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private void setProgressBar(int v) {
 
         ProgressBar progress =  findViewById(R.id.progress);
-        int b = (100 / dataSetNum) * v;
+        int b = 10 * v;
         progress.setVisibility(View.VISIBLE);
         progress.setProgress(b);
     }
@@ -118,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
     public void categoryClick(View view) {
         switch (view.getId()) {
             case R.id.category1:
-                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
                 chosenCategory=1;
                 initDataCat1();
                 break;
@@ -135,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        categoryViev=(ScrollView)findViewById (R.id.categoryViev);
-        categoryViev.setVisibility(GONE);
+        categoryView= findViewById (R.id.categoryViev);
+        categoryView.setVisibility(GONE);
         setProgressBar(0);
         initView();
     }
@@ -165,10 +165,24 @@ public class MainActivity extends AppCompatActivity {
         list.add(R.drawable.img4);
         list.add(R.drawable.img5);
         list.add(R.drawable.img6);
+        list.add(R.drawable.img7);
+        list.add(R.drawable.img8);
+        list.add(R.drawable.img9);
+        list.add(R.drawable.img10);
+        list.add(R.drawable.img11);
+        list.add(R.drawable.img12);
+        list.add(R.drawable.img13);
+        list.add(R.drawable.img14);
+        list.add(R.drawable.img15);
+        list.add(R.drawable.img16);
+        list.add(R.drawable.img17);
+        list.add(R.drawable.img18);
+        list.add(R.drawable.img19);
+        list.add(R.drawable.img20);
         Collections.shuffle(list);
         dataSetNum=list.size();
-         if ( dataSetNum > 5 )
-             list.subList(5, dataSetNum).clear();
+         if ( dataSetNum > 10 )
+             list.subList(10, dataSetNum).clear();
         dataSetNum=list.size();
     }
 
