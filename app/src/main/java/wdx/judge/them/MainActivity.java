@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -29,22 +30,23 @@ import wdx.judge.them.CardItemTouchHelperCallback;
 import wdx.judge.them.CardLayoutManager;
 import wdx.judge.them.OnSwipeListener;
 
+import static android.view.View.GONE;
+
 
 public class MainActivity extends AppCompatActivity {
-    final int dataSetNum=7;
+    static int dataSetNum;
     private List<Integer> list = new ArrayList<>();
-    final static int answerData[][] = new int[10][5]; //номер картинки+bio, свайп влево(тюрьма), правильный ответ, распространенность ответа
-    private int counter=1;
+    final static int answerData[][] = new int[8][5]; //номер картинки+bio, свайп влево(тюрьма), правильный ответ, распространенность ответа
+    private int counter;
     private int currentAvatar;
     private boolean leftSwiped;
+    ScrollView categoryViev;
+    static int chosenCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
-        initData();
-
     }
 
      private void initView() {
@@ -59,12 +61,12 @@ public class MainActivity extends AppCompatActivity {
                 MyAdapter.MyViewHolder myHolder = (MyAdapter.MyViewHolder) viewHolder;
                 viewHolder.itemView.setAlpha(1 - Math.abs(ratio) * 0.2f);
                 if (direction == CardConfig.SWIPING_LEFT) {
-                    myHolder.dislikeImageView.setAlpha(Math.abs(ratio));
+                    myHolder.specialImageView.setAlpha(Math.abs(ratio));
                 } else if (direction == CardConfig.SWIPING_RIGHT) {
-                    myHolder.likeImageView.setAlpha(Math.abs(ratio));
+                    myHolder.commonImageView.setAlpha(Math.abs(ratio));
                 } else {
-                    myHolder.dislikeImageView.setAlpha(0f);
-                    myHolder.likeImageView.setAlpha(0f);
+                    myHolder.specialImageView.setAlpha(0f);
+                    myHolder.commonImageView.setAlpha(0f);
                 }
             }
 
@@ -73,11 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
                 MyAdapter.MyViewHolder myHolder = (MyAdapter.MyViewHolder) viewHolder;
                 viewHolder.itemView.setAlpha(1f);
-                myHolder.dislikeImageView.setAlpha(0f);
-                myHolder.likeImageView.setAlpha(0f);
-              //  Toast.makeText(MainActivity.this, direction == CardConfig.SWIPED_LEFT ? "swiped left" : "swiped right", Toast.LENGTH_SHORT).show();
-            //    if (CardConfig.SWIPED_LEFT==direction) {Toast.makeText(MainActivity.this, "лево", Toast.LENGTH_SHORT).show();}
-
+                myHolder.specialImageView.setAlpha(0f);
+                myHolder.commonImageView.setAlpha(0f);
                 leftSwiped=(direction == CardConfig.SWIPED_LEFT);
                 gameDataSwiped();
             }
@@ -86,14 +85,6 @@ public class MainActivity extends AppCompatActivity {
             public void onSwipedClear() {
                 Intent intent = new Intent(MainActivity.this, Result.class);
                 startActivity(intent);
-             //  Toast.makeText(MainActivity.this, "data clear", Toast.LENGTH_SHORT).show();
-             //  recyclerView.postDelayed(new Runnable() {
-             //        @Override
-             //       public void run() {
-             //           initData();
-             //          recyclerView.getAdapter().notifyDataSetChanged();
-             //      }
-             //   }, 3000L);
             }
         });
         final ItemTouchHelper touchHelper = new ItemTouchHelper(cardCallback);
@@ -103,18 +94,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setCurrentAvatar(int position) {
-        currentAvatar=list.get(position);
-    }
 
     private void gameDataSwiped() {
-            for (int i=1; i < 8; i++){
-                if (currentAvatar==getResId("img_avatar_0"+i,R.drawable.class)) {
+            for (int i=0; i < 8; i++){
+                if (currentAvatar==getResId("img"+i,R.drawable.class)) {
                     answerData[counter][1] = leftSwiped ? 1 : 0;
                     answerData[counter++][0] = i;
                 }
             }
-        setProgressBar(counter-1);
+        setProgressBar(counter);
     }
 
 
@@ -122,9 +110,36 @@ public class MainActivity extends AppCompatActivity {
 
         ProgressBar progress =  findViewById(R.id.progress);
         int b = (100 / dataSetNum) * v;
+        progress.setVisibility(View.VISIBLE);
         progress.setProgress(b);
     }
 
+
+    public void categoryClick(View view) {
+        switch (view.getId()) {
+            case R.id.category1:
+                Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+                chosenCategory=1;
+                initDataCat1();
+                break;
+            case R.id.category2:
+                Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
+                chosenCategory=2;
+                initDataCat2();
+                break;
+            case R.id.category3:
+                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.category4:
+                Toast.makeText(this, "4", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        categoryViev=(ScrollView)findViewById (R.id.categoryViev);
+        categoryViev.setVisibility(GONE);
+        setProgressBar(0);
+        initView();
+    }
 
     public static int getResId(String variableName, Class<?> с) {
         Field field;
@@ -142,16 +157,35 @@ public class MainActivity extends AppCompatActivity {
         return resId;
     }
 
-     private void initData() {
-        list.add(R.drawable.img_avatar_01);
-        list.add(R.drawable.img_avatar_02);
-        list.add(R.drawable.img_avatar_03);
-        list.add(R.drawable.img_avatar_04);
-        list.add(R.drawable.img_avatar_05);
-        list.add(R.drawable.img_avatar_06);
-        list.add(R.drawable.img_avatar_07);
+     private void initDataCat1() {
+        list.add(R.drawable.img0);
+        list.add(R.drawable.img1);
+        list.add(R.drawable.img2);
+        list.add(R.drawable.img3);
+        list.add(R.drawable.img4);
+        list.add(R.drawable.img5);
+        list.add(R.drawable.img6);
         Collections.shuffle(list);
+        dataSetNum=list.size();
+         if ( dataSetNum > 5 )
+             list.subList(5, dataSetNum).clear();
+        dataSetNum=list.size();
     }
+
+    private void initDataCat2(){
+        list.add(R.drawable.img0);
+        list.add(R.drawable.img1);
+        list.add(R.drawable.img2);
+        list.add(R.drawable.img3);
+        list.add(R.drawable.img4);
+        Collections.shuffle(list);
+        dataSetNum=list.size();
+        if ( dataSetNum > 5 )
+            list.subList(5, dataSetNum).clear();
+        dataSetNum=list.size();
+    }
+
+
 
     private class MyAdapter extends RecyclerView.Adapter {
         @NonNull
@@ -165,25 +199,24 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             ImageView avatarImageView = ((MyViewHolder) holder).avatarImageView;
             avatarImageView.setImageResource(list.get(position));
-            setCurrentAvatar(position);
+            currentAvatar=list.get(position);
         }
 
         @Override
-        public int getItemCount() {
-            return list.size();
-        }
+        public int getItemCount() {return list.size();}
+
 
         class MyViewHolder extends RecyclerView.ViewHolder {
 
             ImageView avatarImageView;
-            ImageView likeImageView;
-            ImageView dislikeImageView;
+            ImageView commonImageView;
+            ImageView specialImageView;
 
             MyViewHolder(View itemView) {
                 super(itemView);
-                avatarImageView = (ImageView) itemView.findViewById(R.id.iv_avatar);
-                likeImageView = (ImageView) itemView.findViewById(R.id.iv_like);
-                dislikeImageView = (ImageView) itemView.findViewById(R.id.iv_dislike);
+                avatarImageView = itemView.findViewById(R.id.iv_avatar);
+                commonImageView = itemView.findViewById(R.id.iv_common);
+                specialImageView = itemView.findViewById(R.id.iv_special);
             }
 
         }

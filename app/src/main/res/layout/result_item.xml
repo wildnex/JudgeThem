@@ -37,7 +37,7 @@
             app:layout_constraintStart_toStartOf="@+id/box"
             app:layout_constraintTop_toTopOf="@+id/box"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/img_avatar_01" />
+            app:srcCompat="@drawable/img0" />
 
         <TextView
             android:id="@+id/bio"
