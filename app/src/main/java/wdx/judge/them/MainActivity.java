@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void gameDataSwiped() {
-            for (int i=0; i < 20; i++){
+            for (int i=0; i < dataSetNum; i++){
                 if (currentAvatar==getResId("img"+i,R.drawable.class)) {
                     answerData[counter][1] = leftSwiped ? 1 : 0;
                     answerData[counter++][0] = i;
@@ -178,12 +178,10 @@ public class MainActivity extends AppCompatActivity {
         list.add(R.drawable.img17);
         list.add(R.drawable.img18);
         list.add(R.drawable.img19);
-        list.add(R.drawable.img20);
         Collections.shuffle(list);
         dataSetNum=list.size();
          if ( dataSetNum > 10 )
              list.subList(10, dataSetNum).clear();
-        dataSetNum=list.size();
     }
 
     private void initDataCat2(){
