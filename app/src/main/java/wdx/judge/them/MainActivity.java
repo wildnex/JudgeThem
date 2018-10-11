@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Switch;
@@ -41,13 +42,14 @@ public class MainActivity extends AppCompatActivity {
     private int currentAvatar;
     private boolean leftSwiped;
     ScrollView categoryView;
-    static int chosenCategory;
+    static String chosenCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+
     }
 
      private void initView() {
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void gameDataSwiped() {
             for (int i=0; i < dataSetNum; i++){
-                if (currentAvatar==getResId("img"+i,R.drawable.class)) {
+                if (currentAvatar==getResId(chosenCategory + i,R.drawable.class)) {
                     answerData[counter][1] = leftSwiped ? 1 : 0;
                     answerData[counter++][0] = i;
                 }
@@ -119,33 +121,44 @@ public class MainActivity extends AppCompatActivity {
     public void categoryClick(View view) {
         switch (view.getId()) {
             case R.id.category1:
-                chosenCategory=1;
-                initDataCat1();
+                chosenCategory="img";
                 break;
             case R.id.category2:
-                Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
-                chosenCategory=2;
-                initDataCat2();
+                chosenCategory="imn";
                 break;
             case R.id.category3:
-                Toast.makeText(this, "3", Toast.LENGTH_SHORT).show();
+                chosenCategory="igg";
                 break;
             case R.id.category4:
                 Toast.makeText(this, "4", Toast.LENGTH_SHORT).show();
                 break;
         }
 
+        for(int i=0;i<20;i++)
+            list.add(getResId(chosenCategory+i,R.drawable.class));
+        Collections.shuffle(list);
+        dataSetNum=list.size();
+        if ( dataSetNum > 10 )
+            list.subList(10, dataSetNum).clear();
+
         categoryView= findViewById (R.id.categoryViev);
         categoryView.setVisibility(GONE);
+
+        ImageView imagecattext =  findViewById(R.id.imagecattext);
+        LinearLayout mainLayout = findViewById(R.id.mainLayout);
+        imagecattext.setImageResource(getResId("categorytext_"+chosenCategory,R.drawable.class));
+        imagecattext.setVisibility(View.VISIBLE);
+        mainLayout.setBackgroundResource(getResId(chosenCategory+"_bg",R.drawable.class));
+
         setProgressBar(0);
         initView();
     }
 
-    public static int getResId(String variableName, Class<?> с) {
+    public static int getResId(String variableName, Class<?> c) {
         Field field;
         int resId = 0;
         try {
-            field = с.getField(variableName);
+            field = c.getField(variableName);
             try {
                 resId = field.getInt(null);
             } catch (Exception e) {
@@ -157,45 +170,6 @@ public class MainActivity extends AppCompatActivity {
         return resId;
     }
 
-     private void initDataCat1() {
-        list.add(R.drawable.img0);
-        list.add(R.drawable.img1);
-        list.add(R.drawable.img2);
-        list.add(R.drawable.img3);
-        list.add(R.drawable.img4);
-        list.add(R.drawable.img5);
-        list.add(R.drawable.img6);
-        list.add(R.drawable.img7);
-        list.add(R.drawable.img8);
-        list.add(R.drawable.img9);
-        list.add(R.drawable.img10);
-        list.add(R.drawable.img11);
-        list.add(R.drawable.img12);
-        list.add(R.drawable.img13);
-        list.add(R.drawable.img14);
-        list.add(R.drawable.img15);
-        list.add(R.drawable.img16);
-        list.add(R.drawable.img17);
-        list.add(R.drawable.img18);
-        list.add(R.drawable.img19);
-        Collections.shuffle(list);
-        dataSetNum=list.size();
-         if ( dataSetNum > 10 )
-             list.subList(10, dataSetNum).clear();
-    }
-
-    private void initDataCat2(){
-        list.add(R.drawable.img0);
-        list.add(R.drawable.img1);
-        list.add(R.drawable.img2);
-        list.add(R.drawable.img3);
-        list.add(R.drawable.img4);
-        Collections.shuffle(list);
-        dataSetNum=list.size();
-        if ( dataSetNum > 5 )
-            list.subList(5, dataSetNum).clear();
-        dataSetNum=list.size();
-    }
 
 
 
@@ -229,6 +203,9 @@ public class MainActivity extends AppCompatActivity {
                 avatarImageView = itemView.findViewById(R.id.iv_avatar);
                 commonImageView = itemView.findViewById(R.id.iv_common);
                 specialImageView = itemView.findViewById(R.id.iv_special);
+                commonImageView.setImageResource(getResId( chosenCategory +"_common" ,R.drawable.class));
+                specialImageView.setImageResource(getResId( chosenCategory +"_special" ,R.drawable.class));
+
             }
 
         }

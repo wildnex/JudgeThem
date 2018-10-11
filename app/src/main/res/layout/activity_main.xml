@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/serial_bg"
+    android:background="@drawable/img_bg"
+    android:id="@+id/mainLayout"
     android:orientation="vertical"
     tools:context="wdx.judge.them.MainActivity">
 
@@ -16,6 +17,13 @@
         android:foregroundGravity="center"
         android:progress="0"
         android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imagecattext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:srcCompat="@drawable/categorytext_img" />
 
     <ScrollView
         android:id="@+id/categoryViev"
