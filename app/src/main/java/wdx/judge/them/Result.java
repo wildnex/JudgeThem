@@ -34,7 +34,6 @@ public class Result extends MainActivity {
             ImageView avatar = view.findViewById(R.id.avatar);
             ImageView box = view.findViewById(R.id.box);
             boolean right = (answerData[i][1] == answerData[answerData[i][0]][2]);
-            //boolean special=(answerData[answerData[i][0]][2]==1);
             if (right) box.setImageResource(R.drawable.right_card_background);
             else box.setImageResource(R.drawable.wrong_card_background);
             bio.setText(setBioText(answerData[i][0], right));
@@ -46,7 +45,7 @@ public class Result extends MainActivity {
         LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(wrapContent, wrapContent);
         lParams.gravity = Gravity.CENTER_HORIZONTAL;
         Button btnNew = new Button(this);
-        btnNew.setText("Заново?");
+        btnNew.setBackgroundResource(R.drawable.restartb);
         llMain.addView(btnNew, lParams);
         btnNew.setOnClickListener(new View.OnClickListener() {
             @Override

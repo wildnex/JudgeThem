@@ -1,9 +1,6 @@
 package wdx.judge.them;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -17,19 +14,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.Switch;
-import android.widget.Toast;
-
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import wdx.judge.them.CardConfig;
-import wdx.judge.them.CardItemTouchHelperCallback;
-import wdx.judge.them.CardLayoutManager;
-import wdx.judge.them.OnSwipeListener;
+
 
 import static android.view.View.GONE;
 
@@ -37,7 +27,7 @@ import static android.view.View.GONE;
 public class MainActivity extends AppCompatActivity {
     static int dataSetNum;
     private List<Integer> list = new ArrayList<>();
-    final static int answerData[][] = new int[20][5]; //номер картинки+bio, свайп влево(тюрьма), правильный ответ, распространенность ответа
+    final static int answerData[][] = new int[20][5]; //номер картинки+bio, свайп влево(special), правильный ответ, распространенность ответа
     private int counter;
     private int currentAvatar;
     private boolean leftSwiped;
