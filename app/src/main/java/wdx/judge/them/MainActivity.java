@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 chosenCategory="igg";
                 break;
             case R.id.category4:
-                Toast.makeText(this, "4", Toast.LENGTH_SHORT).show();
+                chosenCategory="imt";
                 break;
         }
 
@@ -169,8 +169,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return resId;
     }
-
-
 
 
     private class MyAdapter extends RecyclerView.Adapter {

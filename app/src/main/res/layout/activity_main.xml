@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_bg"
     android:id="@+id/mainLayout"
     android:orientation="vertical"
     tools:context="wdx.judge.them.MainActivity">
@@ -81,25 +80,7 @@
                 app:srcCompat="@drawable/cat4"
                 tools:ignore="ContentDescription" />
 
-            <ImageView
-                android:id="@+id/category5"
-                android:layout_width="match_parent"
-                android:layout_height="177dp"
-                android:layout_weight="1"
-                android:onClick="categoryClick"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/cat5"
-                tools:ignore="ContentDescription" />
 
-            <ImageView
-                android:id="@+id/category6"
-                android:layout_width="match_parent"
-                android:layout_height="177dp"
-                android:layout_weight="1"
-                android:onClick="categoryClick"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/cat6"
-                tools:ignore="ContentDescription" />
 
         </LinearLayout>
     </ScrollView>
