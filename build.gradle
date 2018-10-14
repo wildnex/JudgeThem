@@ -26,6 +26,7 @@ allprojects {
             name 'Google'
         }
         maven { url 'https://jitpack.io' }
+        google()
     }
     tasks.withType(Javadoc) {
         options {
