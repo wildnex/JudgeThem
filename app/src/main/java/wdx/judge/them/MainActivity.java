@@ -14,10 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.Toast;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import me.yuqirong.cardswipelayout.CardConfig;
 import me.yuqirong.cardswipelayout.CardItemTouchHelperCallback;
 import me.yuqirong.cardswipelayout.CardLayoutManager;
@@ -35,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean leftSwiped;
     ScrollView categoryView;
     static String chosenCategory;
+    double back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-
     }
 
      private void initView() {
@@ -79,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwipedClear() {
                 Intent intent = new Intent(MainActivity.this, Result.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
@@ -162,6 +166,15 @@ public class MainActivity extends AppCompatActivity {
         return resId;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + 2000 > System.currentTimeMillis()) {
+            super.onBackPressed();
+        } else {
+            Toast.makeText(getBaseContext(), "Еще раз НАЗАД чтобы выйти", Toast.LENGTH_SHORT).show();
+        }
+        back_pressed = System.currentTimeMillis();
+    }
 
     private class MyAdapter extends RecyclerView.Adapter {
         @NonNull

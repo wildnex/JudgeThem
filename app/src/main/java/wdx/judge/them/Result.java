@@ -1,6 +1,5 @@
 package wdx.judge.them;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class Result extends MainActivity {
@@ -51,6 +49,7 @@ public class Result extends MainActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Result.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
