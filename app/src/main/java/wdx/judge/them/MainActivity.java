@@ -1,8 +1,10 @@
 package wdx.judge.them;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
@@ -93,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void gameDataSwiped() {
             for (int i=0; i < dataSetNum; i++){
                 if (currentAvatar==getResId(chosenCategory + i,R.drawable.class)) {
@@ -113,8 +115,35 @@ public class MainActivity extends AppCompatActivity {
         progress.setProgress(b);
     }
 
+    @Override
+    protected Dialog onCreateDialog(int id) {
+
+        AlertDialog.Builder adb = new AlertDialog.Builder(this, R.style.MyDialogTheme);
+
+        LinearLayout view1 = (LinearLayout) getLayoutInflater()
+                .inflate(R.layout.dialog, null);
+        adb.setView(view1);
+        adb.setNegativeButton("Начнем же!", null);
+        TextView txt = view1.findViewById(R.id.textView);
+        switch (chosenCategory) {
+            case "img":
+                txt.setText(R.string.dialog1);
+                break;
+            case "imn":
+                txt.setText(R.string.dialog2);
+                break;
+            case "igg":
+                txt.setText(R.string.dialog3);
+                break;
+            case "imt":
+                txt.setText(R.string.dialog4);
+                break;
+        }
+        return adb.create();
+    }
 
     public void categoryClick(View view) {
+
         switch (view.getId()) {
             case R.id.category1:
                 chosenCategory="img";
@@ -130,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+        showDialog(1);
         for(int i=0;i<20;i++)
             list.add(getResId(chosenCategory+i,R.drawable.class));
         Collections.shuffle(list);
@@ -175,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
         }
         back_pressed = System.currentTimeMillis();
     }
+
 
     private class MyAdapter extends RecyclerView.Adapter {
         @NonNull
